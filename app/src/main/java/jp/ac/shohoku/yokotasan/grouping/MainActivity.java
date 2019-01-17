@@ -1,36 +1,97 @@
 package jp.ac.shohoku.yokotasan.grouping;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-private  TextView countText;
-private  Button plus1Button;
+private  TextView GText;
+private  TextView MText;
+private  ImageButton Blueplus;
+private ImageButton Blueminus;
+private  ImageButton Pinkplus;
+private ImageButton Pinkminus;
+private ImageButton Wakeru;
+private int group = 0;
+private int member = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       plus1Button = (Button) findViewById(R.id.button);
+        /**
+         * 人数入力
+         */
 
-        countText =  (TextView) findViewById(R.id.textView);
+        Blueplus = (ImageButton) findViewById(R.id.Bplus);
+       Blueminus =(ImageButton) findViewById(R.id.Bminus);
 
-        plus1Button.setOnClickListener(new View.OnClickListener()
+       MText =  (TextView) findViewById(R.id.textView);
 
-        {
+       member = Integer.parseInt(MText.getText().toString());
 
-            int num = Integer.parseInt(countText.getText().toString());
-
+       Blueplus.setOnClickListener(new View.OnClickListener() {
             public void onClick (View view){
-                num = num + 1;
+                if(member < 20) {
+                    member = member + 1;
+                    MText.setText(String.valueOf(member));
+                }
+            }
+        });
 
-               countText.setText(String.valueOf(num));
+       Blueminus.setOnClickListener(new View.OnClickListener() {
+            public void onClick (View view){
+                if(member > 0) {
+                    member = member - 1;
+                    MText.setText(String.valueOf(member));
+                }
+            }
+        });
+
+        /**
+         * ここからはグループ数入力
+         */
+
+        Pinkplus = (ImageButton) findViewById(R.id.Pplus);
+        Pinkminus =(ImageButton) findViewById(R.id.Pminus);
+
+        GText =  (TextView) findViewById(R.id.textView2);
+
+        group = Integer.parseInt(GText.getText().toString());
+
+        Pinkplus.setOnClickListener(new View.OnClickListener() {
+            public void onClick (View view){
+                if(group < 10) {
+                    group = group + 1;
+                    GText.setText(String.valueOf(group));
+                }
+            }
+        });
+
+        Pinkminus.setOnClickListener(new View.OnClickListener() {
+            public void onClick (View view){
+                if(group > 0) {
+                    group = group - 1;
+                    GText.setText(String.valueOf(group));
+                }
+            }
+        });
+
+        Wakeru = (ImageButton) findViewById(R.id.wakeru);
+        Wakeru.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, SubActivity.class);
+                intent.putExtra("Member", member);
+                intent.putExtra("Group", group);
+                startActivity(intent);
             }
         });
     }
 
-
 }
+
+
